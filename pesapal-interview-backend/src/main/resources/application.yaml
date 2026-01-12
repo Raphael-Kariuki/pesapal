@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: pesapal-interview
+  datasource:
+    url: jdbc:postgresql://localhost:7703/pesapal
+    username: postgres
+    password: 12345678
+    driver-class-name: org.postgresql.Driver
+  profiles:
+    active: dev

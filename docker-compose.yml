@@ -1,0 +1,26 @@
+services:
+  pesapal_postgres:
+    image: postgres:17
+    container_name: pesapal_postgres_db
+    environment:
+      POSTGRES_PASSWORD: 12345678
+      TZ: Africa/Nairobi
+    command: postgres -c timezone=Africa/Nairobi
+    restart: always
+    ports:
+      - "7702:5432"
+    volumes:
+      - ./postgres_data/postgres:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  pesapal_pgbouncer:
+    image: edoburu/pgbouncer
+    container_name: pesapal_pgbouncer
+    restart: always
+    depends_on:
+      - pesapal_postgres
+    ports:
+      - "7703:6432"
+    volumes:
+      - ./docker/pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini
+      - ./docker/pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt
