@@ -2,6 +2,7 @@ package com.raphael.pesapal_interview.dto;
 
 import com.raphael.pesapal_interview.utilities.OptionalNotBlank;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -72,8 +73,46 @@ public class ChartTypeDTOs {
             Long oid,
             String className,
             String classCode,
-            String classType,
+            ChartClassTypeEnum classType,
             Boolean inactive) {
+
+    }
+
+    @Builder
+    public record RegisterChartClassRequest(
+            @NotBlank(message = "Please provide a valid chart class name")
+            String className,
+            @NotBlank(message = "Please provide a valid chart class name")
+            String classCode,
+            ChartClassTypeEnum chartClassType,
+            @NotNull
+            @NotBlank
+            String userName
+    ) {
+
+    }
+
+    @Builder
+    public record UpdateChartClassRequest(
+            @NotNull(message = "Please provide a valid chart class id")
+            @Min(value = 1L, message = "Please provide a valid chart class id")
+            Long oid,
+            @OptionalNotBlank
+            String className,
+            @OptionalNotBlank
+            String classCode,
+            ChartClassTypeEnum classType,
+            Boolean inactive,
+            @NotNull
+            @NotBlank
+            String updateUser) {
+
+    }
+
+    @Builder
+    public record DeleteChartClassRequest(
+            @NotBlank(message = "Please provide a valid chart class id")
+            Long oid) {
 
     }
 }

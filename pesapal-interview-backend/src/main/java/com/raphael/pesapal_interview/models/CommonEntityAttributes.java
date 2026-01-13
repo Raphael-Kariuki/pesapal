@@ -14,12 +14,12 @@ import lombok.*;
 @Embeddable
 public class CommonEntityAttributes {
     @Basic(optional = false)
-    @Column(name = "user_id", nullable = false, updatable = false, insertable = true)
-    private Long userId;
+    @Column(name = "user_name", nullable = false, updatable = false, insertable = true)
+    private String userId;
 
     @Basic(optional = false)
-    @Column(name = "update_user_id", nullable = true, updatable = true, insertable = false)
-    private Long updateUserId;
+    @Column(name = "update_user", nullable = true, updatable = true, insertable = false)
+    private String updateUser;
 
 
     @Basic
