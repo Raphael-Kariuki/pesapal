@@ -14,11 +14,11 @@ import java.time.OffsetDateTime;
 @Setter
 @Entity
 @Builder
-@Table(name = "chart_classes")
+@Table(name = "chart_classes",catalog = "pesapal", schema = "finance")
 public class ChartClass extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chart_classes_id_gen")
-    @SequenceGenerator(name = "chart_classes_id_gen", sequenceName = "chart_classes_oid_seq", allocationSize = 1)
+    @SequenceGenerator(name = "chart_classes_id_gen", sequenceName = "finance.chart_classes_oid_seq", allocationSize = 1)
     @Column(name = "oid", nullable = false)
     private Long oid;
 

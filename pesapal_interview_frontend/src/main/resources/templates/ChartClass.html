@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head>
+    <meta charset="UTF-8">
+    <title>Chart Class</title>
+    <link th:href="@{/css/output.css}" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+<h1 class="text-4xl font-bold text-blue-600">Chart Classes</h1>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Class Name</th>
+        <th>Class Code</th>
+        <th>Class Type</th>
+        <th>Status</th>
+    </tr>
+    <tr th:each="chartClass : ${chartClasses}">
+        <td th:text="${chartClass.oid}"></td>
+        <td th:text="${chartClass.className}"></td>
+        <td th:text="${chartClass.classCode}"></td>
+        <td th:text="${chartClass.classType}"></td>
+        <td th:text="${chartClass.inactive}"></td>
+        <td>
+            <a th:href="@{|/edit/${chartClass.oid}|}">Edit</a>
+            <a th:href="@{|/delete/${chartClass.oid}|}">Delete</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
