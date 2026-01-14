@@ -2,29 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org"><head>
     <meta charset="UTF-8">
     <title>Chart Class</title>
-    <link th:href="@{/css/output.css}" rel="stylesheet">
+<!--    <link th:href="@{/css/output.css}" rel="stylesheet">-->
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+
 </head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-<h1 class="text-4xl font-bold text-blue-600">Chart Classes</h1>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Class Name</th>
-        <th>Class Code</th>
-        <th>Class Type</th>
-        <th>Status</th>
-    </tr>
-    <tr th:each="chartClass : ${chartClasses}">
-        <td th:text="${chartClass.oid}"></td>
-        <td th:text="${chartClass.className}"></td>
-        <td th:text="${chartClass.classCode}"></td>
-        <td th:text="${chartClass.classType}"></td>
-        <td th:text="${chartClass.inactive}"></td>
-        <td>
-            <a th:href="@{|/edit/${chartClass.oid}|}">Edit</a>
-            <a th:href="@{|/delete/${chartClass.oid}|}">Delete</a>
-        </td>
-    </tr>
-</table>
+<body >
+<script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
+
+<div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
+    <table class="w-full text-sm text-left rtl:text-right text-body">
+        <thead class="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
+        <tr>
+            <a th:href="@{/addChartClass}">Add New Chart Class</a>
+        </tr>
+        <tr>
+            <th scope="col" class="px-6 py-3 font-bold">
+                Class name
+            </th>
+            <th scope="col" class="px-6 py-3 font-bold">
+               Class code
+            </th>
+            <th scope="col" class="px-6 py-3 font-bold">
+               Class type
+            </th>
+            <th scope="col" class="px-6 py-3 font-bold">
+                Inactive
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="chartClass : ${chartClasses}">
+            <td class="px-6 py-4" th:text="${chartClass.className}"></td>
+            <td class="px-6 py-4" th:text="${chartClass.classCode}"></td>
+            <td class="px-6 py-4" th:text="${chartClass.classType}"></td>
+            <td class="px-6 py-4" th:text="${chartClass.inactive}"></td>
+            <td>
+                <a class="px-2" th:href="@{|/edit/${chartClass.oid}|}">Edit</a>
+                <a class="px-2" th:href="@{|/delete/${chartClass.oid}|}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>

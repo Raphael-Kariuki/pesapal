@@ -1,5 +1,7 @@
 package com.raphael.pesapal_interview_frontend.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -31,4 +33,5 @@ public class ChartClassDTOs {
             this.description = description;
         }
     }
+
 }

@@ -1,4 +1,4 @@
-package com.raphael.pesapal_interview;
+package com.raphael.pesapal_interview.controller;
 
 import com.raphael.pesapal_interview.dto.ChartTypeDTOs.*;
 import com.raphael.pesapal_interview.service.ChartClassService;
@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,6 +28,11 @@ public class ChartClassController {
         this.chartClassService = chartClassService;
     }
 
+    @GetMapping("/classTypes")
+    public ResponseEntity<Map<String, String>> getChartClassTypes() {
+        var response = Arrays.stream(ChartClassTypeEnum.values()).collect(Collectors.toMap(ChartClassTypeEnum::getLabel, ChartClassTypeEnum::getDescription));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     @GetMapping
     public ResponseEntity<List<ChartClassResponse>> getChartClass(
             @Min(value = 1L, message = "Please provide a valid chart class id")
