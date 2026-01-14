@@ -1,5 +1,6 @@
 package com.raphael.pesapal_interview_frontend.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -34,4 +35,20 @@ public class ChartClassDTOs {
         }
     }
 
+    @Builder
+    public record UpdateChartClassRequest(
+            @NotNull(message = "Please provide a valid chart class id")
+            @Min(value = 1L, message = "Please provide a valid chart class id")
+            Long oid,
+            @NotBlank
+            String className,
+            @NotBlank
+            String classCode,
+            ChartClassTypeEnum classType,
+            Boolean inactive,
+            @NotNull
+            @NotBlank
+            String updateUser) {
+
+    }
 }

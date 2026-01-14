@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
+import org.aspectj.bridge.IMessage;
 
 public class ChartTypeDTOs {
 
@@ -94,17 +95,17 @@ public class ChartTypeDTOs {
 
     @Builder
     public record UpdateChartClassRequest(
-            @NotNull(message = "Please provide a valid chart class id")
+            @NotNull(message = "Chart class id must not be null")
             @Min(value = 1L, message = "Please provide a valid chart class id")
             Long oid,
-            @OptionalNotBlank
+            @OptionalNotBlank(message = "Class name when provided must not be blank")
             String className,
-            @OptionalNotBlank
+            @OptionalNotBlank(message = "Class code when provided must not be blank")
             String classCode,
             ChartClassTypeEnum classType,
             Boolean inactive,
-            @NotNull
-            @NotBlank
+            @NotNull(message = "update user must not be null")
+            @NotBlank(message = "update user must not be blank")
             String updateUser) {
 
     }

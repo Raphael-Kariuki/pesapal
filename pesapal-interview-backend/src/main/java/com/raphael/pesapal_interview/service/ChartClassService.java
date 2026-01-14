@@ -54,9 +54,10 @@ var cb = criteriaBuilderFactory.create(entityManager, ChartClass.class, "cc");
         }
         if (getChartClassesDTO.inactive() != null) {
             cb.where("cc.commonEntityAttributes.inactive").eq(getChartClassesDTO.inactive());
-        }else{
-           cb.where("cc.commonEntityAttributes.inactive").eq(false);
         }
+//        else{
+//           cb.where("cc.commonEntityAttributes.inactive").eq(false);
+//        }
 
         var view = entityViewManager.applySetting(EntityViewSetting.create(ChartClassEntityView.class), cb);
         var pcb = view.page(getChartClassesDTO.pageNumber(), getChartClassesDTO.pageSize()).orderByAsc("oid");
@@ -104,7 +105,7 @@ var cb = criteriaBuilderFactory.create(entityManager, ChartClass.class, "cc");
         entityMap.forEach((id, entity) -> {
             var dto = dtoMap.get(id);
             if (dto != null) {
-                if (dto.classCode() != null) {
+                if (dto.classCode() != null && !dto.classCode().equals(entity.getClassCode())) {
                     entity.setClassCode(dto.classCode());
                 }
                 if (dto.className() != null) {

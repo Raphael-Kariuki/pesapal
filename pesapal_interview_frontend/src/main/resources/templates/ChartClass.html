@@ -14,7 +14,7 @@
     <table class="w-full text-sm text-left rtl:text-right text-body">
         <thead class="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
         <tr>
-            <a th:href="@{/addChartClass}">Add New Chart Class</a>
+            <a class="text-black bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none" th:href="@{/addChartClass}">Add New Chart Class</a>
         </tr>
         <tr>
             <th scope="col" class="px-6 py-3 font-bold">
@@ -38,7 +38,7 @@
             <td class="px-6 py-4" th:text="${chartClass.classType}"></td>
             <td class="px-6 py-4" th:text="${chartClass.inactive}"></td>
             <td>
-                <a class="px-2" th:href="@{|/edit/${chartClass.oid}|}">Edit</a>
+                <a class="px-2" th:href="@{|/update/${chartClass.oid}|}">Edit</a>
                 <a class="px-2" th:href="@{|/delete/${chartClass.oid}|}">Delete</a>
             </td>
         </tr>

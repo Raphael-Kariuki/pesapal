@@ -59,7 +59,7 @@ public class ChartClassController {
         return new ResponseEntity<>(chartClassService.registerChartClass(registerChartClassRequests), HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PostMapping("/update")
     public ResponseEntity<Set<ChartClassResponse>> updateChartClass(@RequestBody @NotEmpty Set<@Valid UpdateChartClassRequest> updateChartClassRequests){
         return new ResponseEntity<>(chartClassService.updateChartClass(updateChartClassRequests), HttpStatus.OK);
     }
