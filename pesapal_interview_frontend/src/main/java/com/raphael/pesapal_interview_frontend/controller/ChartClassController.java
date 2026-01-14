@@ -5,6 +5,7 @@ import com.raphael.pesapal_interview_frontend.dto.RegisterChartClassRequest;
 import com.raphael.pesapal_interview_frontend.dto.UpdateChartClassRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ public class ChartClassController {
         Map<String, String> map = new HashMap<>();
         var classTypes = restTemplate.getForObject(url + "/classTypes", map.getClass());
         model.addAttribute("classTypes", classTypes);
+        model.addAttribute("registerChartClassRequest", registerChartClassRequest);
         return "AddChartClass";
     }
 
@@ -70,5 +72,11 @@ public class ChartClassController {
         restTemplate.postForObject(url + "/update", new HashSet<>(List.of(updateChartClassRequest)), ChartClassDTOs.ChartClassResponse[].class);
         return "redirect:/chartClasses";
 
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteChartClass(@PathVariable Long id) {
+        restTemplate.delete(url + "?oid=" + id);
+        return "redirect:/chartClasses";
     }
 }
