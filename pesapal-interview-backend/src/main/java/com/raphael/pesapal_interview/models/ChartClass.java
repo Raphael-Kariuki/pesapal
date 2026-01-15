@@ -1,12 +1,8 @@
 package com.raphael.pesapal_interview.models;
 
-import com.raphael.pesapal_interview.dto.ChartTypeDTOs;
+import com.raphael.pesapal_interview.dto.ChartClassDTOs;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,7 +26,7 @@ public class ChartClass extends BaseEntity {
 
     @Column(name = "class_type", nullable = false, length = 100)
     @Enumerated(EnumType.STRING)
-    private ChartTypeDTOs.ChartClassTypeEnum classType;
+    private ChartClassDTOs.ChartClassTypeEnum classType;
 
 
     @Column(name = "version")

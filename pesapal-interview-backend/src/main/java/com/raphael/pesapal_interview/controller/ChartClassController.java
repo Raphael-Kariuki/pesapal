@@ -1,6 +1,6 @@
 package com.raphael.pesapal_interview.controller;
 
-import com.raphael.pesapal_interview.dto.ChartTypeDTOs.*;
+import com.raphael.pesapal_interview.dto.ChartClassDTOs.*;
 import com.raphael.pesapal_interview.service.ChartClassService;
 import com.raphael.pesapal_interview.utilities.OptionalNotBlank;
 import jakarta.validation.Valid;

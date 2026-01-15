@@ -3,9 +3,6 @@ package com.raphael.pesapal_interview.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-
-import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -16,7 +13,7 @@ public class ChartType extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chart_types_id_gen")
     @SequenceGenerator(name = "chart_types_id_gen", sequenceName = "finance.chart_types_oid_seq", allocationSize = 1)
     @Column(name = "oid", nullable = false)
-    private Long id;
+    private Long oid;
 
     @Column(name = "chart_type_name", nullable = false, length = 100)
     private String chartTypeName;
@@ -28,9 +25,9 @@ public class ChartType extends BaseEntity {
     @Column(name = "type_code", nullable = false, length = 100)
     private String typeCode;
 
-    @ColumnDefault("0")
-    @Column(name = "parent_id", nullable = false)
-    private Long parentId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "parent_id", nullable = true)
+    private ChartType parentId;
 
 
     @Column(name = "version")

@@ -2,58 +2,31 @@ package com.raphael.pesapal_interview.dto;
 
 import com.raphael.pesapal_interview.utilities.OptionalNotBlank;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
-import lombok.Getter;
-import org.aspectj.bridge.IMessage;
 
 public class ChartTypeDTOs {
-
-    public enum ChartClassTypeEnum {
-        BA("BA","BALANCE_SHEET_ASSETS"),
-        BL("BL","BALANCE_SHEET_LIABILITIES"),
-        BE("BE","BALANCE_SHEET_EQUITY"),
-        PI("PI","PROFIT_LOSS_INCOME"),
-        PE("PE","PROFIT_LOSS_EXPENSES");
-
-        @Getter
-        private final String label;
-        @Getter
-        private final String description;
-
-        ChartClassTypeEnum(String label, String description) {
-            this.label = label;
-            this.description = description;
-        }
-    }
-
     @Builder
-    public record GetChartClassRequest(
-            @OptionalNotBlank
+    public record ChartTypeResponse(
             Long oid,
-            @OptionalNotBlank
-            String className,
-            @OptionalNotBlank
-            String classCode,
-            ChartClassTypeEnum classType,
-            Boolean inactive,
-            @NotNull(message = "Please provide a pageNumber")
-            @Min(value = 0, message = "Please provide a valid page number")
-            int pageNumber,
-            @NotNull(message = "Please provide a pageNumber")
-            @Min(value = 1, message = "Please provide a valid page size")
-            int pageSize) {
+            String chartTypeName,
+            String chartTypeCode,
+            Long chartClassId,
+            String chartClassName,
+            Long parentId,
+            String parentName,
+            Boolean inactive
+    ) {
 
     }
 
     @Builder
-    public record GetChartTypeRequest(
+    public record GetChartTypesRequest(
             @Min(value = 1L, message = "Please provide a valid chart type id")
             Long oid,
-            @OptionalNotBlank
+            @OptionalNotBlank(message = "Chart Type Name when provided cannot be blank")
             String chartTypeName,
-            @OptionalNotBlank
+            @OptionalNotBlank(message = "Chart Type Code when provided cannot be blamk")
             String chartTypeCode,
             @Min(value = 1L, message = "Please provide a valid chart class id")
             Long chartClassId,
@@ -62,58 +35,10 @@ public class ChartTypeDTOs {
             Boolean inactive,
             @NotNull(message = "Please provide a pageNumber")
             @Min(value = 0, message = "Please provide a valid page number")
-            Integer pageNumber,
+            int pageNumber,
             @NotNull(message = "Please provide a pageNumber")
             @Min(value = 1, message = "Please provide a valid page size")
-            Integer pageSize) {
-
-    }
-
-    @Builder
-    public record ChartClassResponse(
-            Long oid,
-            String className,
-            String classCode,
-            ChartClassTypeEnum classType,
-            Boolean inactive) {
-
-    }
-
-    @Builder
-    public record RegisterChartClassRequest(
-            @NotBlank(message = "Please provide a valid chart class name")
-            String className,
-            @NotBlank(message = "Please provide a valid chart class name")
-            String classCode,
-            ChartClassTypeEnum chartClassType,
-            @NotNull
-            @NotBlank
-            String userName
-    ) {
-
-    }
-
-    @Builder
-    public record UpdateChartClassRequest(
-            @NotNull(message = "Chart class id must not be null")
-            @Min(value = 1L, message = "Please provide a valid chart class id")
-            Long oid,
-            @OptionalNotBlank(message = "Class name when provided must not be blank")
-            String className,
-            @OptionalNotBlank(message = "Class code when provided must not be blank")
-            String classCode,
-            ChartClassTypeEnum classType,
-            Boolean inactive,
-            @NotNull(message = "update user must not be null")
-            @NotBlank(message = "update user must not be blank")
-            String updateUser) {
-
-    }
-
-    @Builder
-    public record DeleteChartClassRequest(
-            @NotBlank(message = "Please provide a valid chart class id")
-            Long oid) {
+            int pageSize) {
 
     }
 }

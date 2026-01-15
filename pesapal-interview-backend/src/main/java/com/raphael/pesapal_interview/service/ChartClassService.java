@@ -3,7 +3,7 @@ package com.raphael.pesapal_interview.service;
 import com.blazebit.persistence.CriteriaBuilderFactory;
 import com.blazebit.persistence.view.EntityViewManager;
 import com.blazebit.persistence.view.EntityViewSetting;
-import com.raphael.pesapal_interview.dto.ChartTypeDTOs.*;
+import com.raphael.pesapal_interview.dto.ChartClassDTOs.*;
 import com.raphael.pesapal_interview.models.ChartClass;
 import com.raphael.pesapal_interview.models.CommonEntityAttributes;
 import com.raphael.pesapal_interview.repository.ChartClassesRepository;
