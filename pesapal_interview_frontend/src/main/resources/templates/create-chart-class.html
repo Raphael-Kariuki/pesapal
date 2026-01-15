@@ -11,7 +11,7 @@
 
 <h1>Add chart class</h1>
 
-<form th:action="@{/addChartClass}" th:object="${registerChartClassRequest}" method="post" class="max-w-sm mx-auto">
+<form th:action="@{/chart-class/add}" th:object="${registerChartClassRequest}" method="post" class="max-w-sm mx-auto">
     <div class="mb-5">
     <label for="className" class="block mb-2.5 text-sm font-medium text-heading">Class name: </label>
     <input id="className" type="text" th:field="*{className}" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter Class name" required />
