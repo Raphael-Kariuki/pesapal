@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head>
+  <meta charset="UTF-8">
+  <title>Chart Type</title>
+  <!--    <link th:href="@{/css/output.css}" rel="stylesheet">-->
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+
+</head>
+<body >
+<script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
+
+<div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
+  <table class="w-full text-sm text-left rtl:text-right text-body">
+    <thead class="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
+    <tr>
+      <a class="text-black bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none" th:href="@{/chart-type/add}">Add New Chart Type</a>
+    </tr>
+    <tr>
+      <th scope="col" class="px-6 py-3 font-bold">
+        Chart type name
+      </th>
+      <th scope="col" class="px-6 py-3 font-bold">
+        Chart type code
+      </th>
+      <th scope="col" class="px-6 py-3 font-bold">
+        Class class Name
+      </th>
+      <th scope="col" class="px-6 py-3 font-bold">
+        Parent Name
+      </th>
+      <th scope="col" class="px-6 py-3 font-bold">
+        Inactive
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="chartType : ${chartTypes}">
+      <td class="px-6 py-4" th:text="${chartType.chartTypeName}"></td>
+      <td class="px-6 py-4" th:text="${chartType.chartTypeCode}"></td>
+      <td class="px-6 py-4" th:text="${chartType.chartClassName}"></td>
+      <td class="px-6 py-4" th:text="${chartType.parentName}"></td>
+      <td class="px-6 py-4" th:text="${chartType.inactive}"></td>
+      <td>
+        <a class="px-2" th:href="@{|/chart-type/update/${chartType.oid}|}">Edit</a>
+        <a class="px-2" th:href="@{|chart-type/delete/${chartType.oid}|}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+</body>
+</html>

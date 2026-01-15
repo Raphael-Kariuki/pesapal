@@ -1,7 +1,8 @@
-package com.raphael.pesapal_interview.dto;
+package com.raphael.pesapal_interview_frontend.dto;
 
-import com.raphael.pesapal_interview.utilities.OptionalNotBlank;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 public class ChartTypeDTOs {
@@ -18,14 +19,13 @@ public class ChartTypeDTOs {
     ) {
 
     }
-
     @Builder
     public record GetChartTypesRequest(
             @Min(value = 1L, message = "Please provide a valid chart type id")
             Long oid,
-            @OptionalNotBlank(message = "Chart Type Name when provided cannot be blank")
+            @NotBlank(message = "Chart Type Name when provided cannot be blank")
             String chartTypeName,
-            @OptionalNotBlank(message = "Chart Type Code when provided cannot be blamk")
+            @NotBlank(message = "Chart Type Code when provided cannot be blamk")
             String chartTypeCode,
             @Min(value = 1L, message = "Please provide a valid chart class id")
             Long chartClassId,
@@ -61,28 +61,6 @@ public class ChartTypeDTOs {
     ) {
 
     }
-
-    @Builder
-    public record UpdateChartTypesRequest(
-            @NotNull(message = "Please provide a chart type id")
-            @Min(value = 1L, message = "Please provide a valid chart type id")
-            Long oid,
-            @OptionalNotBlank(message = "Chart Type Name when provide cannot be blank")
-            String chartTypeName,
-            @OptionalNotBlank(message = "Chart Type Code when provide cannot be blank")
-            String chartTypeCode,
-            @Min(value = 1L, message = "Please provide a valid chart class id")
-            Long chartClassId,
-            @Min(value = 0L, message = "Please provide a valid parent id")
-            Long parentId,
-            Boolean inactive,
-            @NotNull(message = "Update User cannot be null")
-            @NotBlank(message = "Update User cannot be blank")
-            String updateUser
-    ) {
-
-    }
-
 
     @Builder
     public record DeleteChartTypeRequest(

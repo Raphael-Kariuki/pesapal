@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head>
+    <meta charset="UTF-8">
+    <title>Chart Type</title>
+    <!--    <link th:href="@{/css/output.css}" rel="stylesheet">-->
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+
+</head>
+<body >
+<script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
+
+<form th:action="@{|/chart-type/update/${updateChartTypesRequest.oid}|}" th:object="${updateChartTypesRequest}" method="post" class="max-w-sm mx-auto">
+    <div class="mb-5">
+        <label for="chartTypeName" class="block mb-2.5 text-sm font-medium text-heading">Chart Type name: </label>
+        <input id="chartTypeName" type="text" th:field="*{chartTypeName}" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter Chart Type name" required />
+    </div>
+    <div class="mb-5">
+        <label for="chartTypeCode" class="block mb-2.5 text-sm font-medium text-heading">Class name: </label>
+        <input id="chartTypeCode" type="text" th:field="*{chartTypeCode}" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter Chart Type code" required />
+    </div>
+    <div class="mb-5">
+        <label for="chartClass" class="block mb-2.5 text-sm font-medium text-heading">Chart Class name: </label>
+        <select id="chartClass" th:field="*{chartClassId}">
+            <option th:each="chartClass : ${chartClasses}"
+                    th:value="${chartClass.oid}"
+                    th:text="${chartClass.className}"></option>
+        </select>
+    </div>
+    <div class="mb-5">
+        <label for="parentId" class="block mb-2.5 text-sm font-medium text-heading">Chart Type Parent name: </label>
+        <select id="parentId" th:field="*{parentId}">
+            <option th:each="chartType : ${chartTypes}"
+                    th:value="${chartType.oid}"
+                    th:text="${chartType.chartTypeName}"></option>
+        </select>
+    </div>
+    <div class="mb-5">
+        <label for="userName" class="block mb-2.5 text-sm font-medium text-heading">Update user name: </label>
+        <input id="userName" type="text" th:field="*{updateUser}" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter update user name" required />
+    </div>
+    <div class="mb-5">
+        <label for="status" class="block mb-2.5 text-sm font-medium text-heading">Inactive: </label>
+        <select id="status" th:field="*{inactive}">
+            <option th:each="status : ${inactive}"
+                    th:value="${status}"
+                    th:text="${status}"></option>
+        </select>
+    </div>
+    <button type="submit" class="text-black bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Update</button>
+</form>
+
+</body>
+</html>

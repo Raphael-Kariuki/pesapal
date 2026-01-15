@@ -195,6 +195,9 @@ public class ChartTypeService {
                     entity.setChartClass(entityManager.getReference(ChartClass.class, dto.chartClassId()));
                 }
                 if (dto.parentId() != null && !dto.parentId().equals(entity.getParentId().getOid())) {
+                    if (dto.parentId().equals(dto.oid())){
+                        throw new BadRequestException("Chart Type cannot be it's own parent");
+                    }
                     entity.setParentId(entityManager.getReference(ChartType.class, dto.parentId()));
                 }
                 var common = entity.getCommonEntityAttributes();

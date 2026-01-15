@@ -2,6 +2,7 @@ package com.raphael.pesapal_interview.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Getter
 @Setter
@@ -9,6 +10,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
 @Table(name = "chart_types", schema = "finance", catalog = "pesapal")
 public class ChartType extends BaseEntity {
     @Id

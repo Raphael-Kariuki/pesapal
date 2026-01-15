@@ -54,7 +54,7 @@ public class ChartTypeController {
 
     @PostMapping
     public ResponseEntity<Set<ChartTypeResponse>> registerChartType(@RequestBody @NotEmpty Set<@Valid RegisterChartTypesRequest> registerChartTypesDTOS) {
-        return new ResponseEntity<>(chartTypeService.registerChartType(registerChartTypesDTOS), HttpStatus.OK);
+        return new ResponseEntity<>(chartTypeService.registerChartType(registerChartTypesDTOS), HttpStatus.CREATED);
     }
 
     @PostMapping("/update")
