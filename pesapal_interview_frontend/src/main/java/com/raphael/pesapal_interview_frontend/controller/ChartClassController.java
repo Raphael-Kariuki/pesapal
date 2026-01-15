@@ -3,13 +3,18 @@ package com.raphael.pesapal_interview_frontend.controller;
 import com.raphael.pesapal_interview_frontend.dto.ChartClassDTOs;
 import com.raphael.pesapal_interview_frontend.dto.RegisterChartClassRequest;
 import com.raphael.pesapal_interview_frontend.dto.UpdateChartClassRequest;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -45,17 +50,22 @@ public class ChartClassController {
 
     @GetMapping("/update/{id}")
     public String showUpdateChartClass(@PathVariable Long id, Model model) {
-        var chartClass = Arrays.stream(Objects.requireNonNull(restTemplate.getForObject(url + "?oid" + id, ChartClassDTOs.ChartClassResponse[].class))).toList().getFirst();
-        var updateChartClass = new UpdateChartClassRequest();
+        var finalUrl = url + "?oid=" + id;
+        ResponseEntity<ChartClassDTOs.ChartClassResponse[]> entity = restTemplate.getForEntity(finalUrl, ChartClassDTOs.ChartClassResponse[].class);
+        if(!entity.getStatusCode().is2xxSuccessful()){
+            return "redirect:/error";
+        }
+        var chartClass = Arrays.stream(Objects.requireNonNull(entity.getBody())).toList().getFirst();
+        var updateChartClassRequest = new UpdateChartClassRequest();
         assert chartClass != null;
-        updateChartClass.setOid(id);
-        updateChartClass.setClassName(chartClass.className());
-        updateChartClass.setClassCode(chartClass.classCode());
-        updateChartClass.setClassType(chartClass.classType());
-        updateChartClass.setInactive(chartClass.inactive());
+        updateChartClassRequest.setOid(id);
+        updateChartClassRequest.setClassName(chartClass.className());
+        updateChartClassRequest.setClassCode(chartClass.classCode());
+        updateChartClassRequest.setClassType(chartClass.classType());
+        updateChartClassRequest.setInactive(chartClass.inactive());
 
 
-         model.addAttribute("chartClass", updateChartClass);
+         model.addAttribute("updateChartClassRequest", updateChartClassRequest);
 
         Map<String, String> map = new HashMap<>();
         var classTypes = restTemplate.getForObject(url + "/classTypes", map.getClass());
@@ -69,7 +79,10 @@ public class ChartClassController {
     @PostMapping("/update/{id}")
     public String updateChartClass(@PathVariable Long id, UpdateChartClassRequest  updateChartClassRequest) {
         updateChartClassRequest.setOid(id);
-        restTemplate.postForObject(url + "/update", new HashSet<>(List.of(updateChartClassRequest)), ChartClassDTOs.ChartClassResponse[].class);
+        var response = restTemplate.postForEntity(url + "/update", new HashSet<>(List.of(updateChartClassRequest)), ChartClassDTOs.ChartClassResponse[].class);
+        if (!response.getStatusCode().is2xxSuccessful()){
+            return "redirect:/error";
+        }
         return "redirect:/chartClasses";
 
     }

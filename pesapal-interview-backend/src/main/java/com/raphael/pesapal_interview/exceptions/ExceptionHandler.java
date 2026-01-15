@@ -123,6 +123,7 @@ public class ExceptionHandler {
         } else {
             detail = "Data integrity violation";
         }
+        errors.put("Details", extractErrorLine(ex.getMessage()));
 
         return new ResponseEntity<>(ErrorResponse.builder().message("ERROR").detail(detail).errors(errors).build(), HttpStatus.BAD_REQUEST);
     }
@@ -139,6 +140,7 @@ public class ExceptionHandler {
         } else {
             detail = "Data integrity violation";
         }
+        errors.put("Details", extractErrorLine(ex.getMessage()));
 
         return new ResponseEntity<>(ErrorResponse.builder().message("ERROR").detail(detail).errors(errors).build(), HttpStatus.BAD_REQUEST);
     }
@@ -170,4 +172,6 @@ public class ExceptionHandler {
         errors.put("Detail", ex.getMessage());
         return new ResponseEntity<>(new ErrorResponse("ERROR", "Missing request attribute", errors), HttpStatus.BAD_REQUEST);
     }
+
+
 }
