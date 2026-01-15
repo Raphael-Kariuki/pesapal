@@ -1,16 +1,19 @@
 package com.raphael.pesapal_interview.controller;
 
 import com.raphael.pesapal_interview.dto.ChartTypeDTOs;
+import com.raphael.pesapal_interview.dto.ChartTypeDTOs.UpdateChartTypesRequest;
+import com.raphael.pesapal_interview.dto.ChartTypeDTOs.ChartTypeResponse;
+import com.raphael.pesapal_interview.dto.ChartTypeDTOs.GetChartTypesRequest;
+import com.raphael.pesapal_interview.dto.ChartTypeDTOs.RegisterChartTypesRequest;
 import com.raphael.pesapal_interview.service.ChartTypeService;
 import com.raphael.pesapal_interview.utilities.OptionalNotBlank;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
@@ -26,7 +29,7 @@ public class ChartTypeController {
     }
 
     @GetMapping
-    public ResponseEntity<Set<ChartTypeDTOs.ChartTypeResponse>> getChartType(
+    public ResponseEntity<Set<ChartTypeResponse>> getChartType(
             @Min(value = 1L)
             @RequestParam(name = "oid", required = false) Long oid,
             @OptionalNotBlank
@@ -45,7 +48,25 @@ public class ChartTypeController {
             @Min(value = 1, message = "Please provide a valid pageSize")
             @RequestParam(name = "pageSize", required = true, defaultValue = "20") Integer pageSize
     ) {
-        var getChartTypeDTO = ChartTypeDTOs.GetChartTypesRequest.builder().oid(oid).chartTypeName(chartTypeName).chartTypeCode(chartTypeCode).chartClassId(chartClassId).parentId(parentId).inactive(inactive).pageNumber(pageNumber).pageSize(pageSize).build();
+        var getChartTypeDTO = GetChartTypesRequest.builder().oid(oid).chartTypeName(chartTypeName).chartTypeCode(chartTypeCode).chartClassId(chartClassId).parentId(parentId).inactive(inactive).pageNumber(pageNumber).pageSize(pageSize).build();
         return new ResponseEntity<>(chartTypeService.getChartTypes(getChartTypeDTO), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Set<ChartTypeResponse>> registerChartType(@RequestBody @NotEmpty Set<@Valid RegisterChartTypesRequest> registerChartTypesDTOS) {
+        return new ResponseEntity<>(chartTypeService.registerChartType(registerChartTypesDTOS), HttpStatus.OK);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<Set<ChartTypeResponse>> updateChartType(@RequestBody @NotEmpty Set<@Valid UpdateChartTypesRequest> updateChartTypesDTOS) {
+        return new ResponseEntity<>(chartTypeService.updateChartType(updateChartTypesDTOS), HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteChartType(
+            @RequestParam(name = "oid", required = true) List<Long> deleteChartTypeIDs
+    ) {
+        chartTypeService.deleteChartType(deleteChartTypeIDs.parallelStream().map(id -> ChartTypeDTOs.DeleteChartTypeRequest.builder().oid(id).build()).toList());
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 }

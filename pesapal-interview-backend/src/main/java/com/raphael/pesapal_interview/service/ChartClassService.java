@@ -81,7 +81,7 @@ var cb = criteriaBuilderFactory.create(entityManager, ChartClass.class, "cc");
                                 .classType(dto.chartClassType())
                                 .commonEntityAttributes(CommonEntityAttributes.builder()
                                         .inactive(Boolean.FALSE)
-                                        .userId(dto.userName())
+                                        .userName(dto.userName())
                                         .build())
                                 .build()).toList())
                 .parallelStream()

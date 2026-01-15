@@ -15,7 +15,7 @@ import lombok.*;
 public class CommonEntityAttributes {
     @Basic(optional = false)
     @Column(name = "user_name", nullable = false, updatable = false, insertable = true)
-    private String userId;
+    private String userName;
 
     @Basic(optional = false)
     @Column(name = "update_user", nullable = true, updatable = true, insertable = false)

@@ -2,6 +2,7 @@ package com.raphael.pesapal_interview.dto;
 
 import com.raphael.pesapal_interview.utilities.OptionalNotBlank;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
@@ -39,6 +40,57 @@ public class ChartTypeDTOs {
             @NotNull(message = "Please provide a pageNumber")
             @Min(value = 1, message = "Please provide a valid page size")
             int pageSize) {
+
+    }
+
+    @Builder
+    public record RegisterChartTypesRequest(
+            @NotNull(message = "Chart Type name cannot be null")
+            @NotBlank(message = "Please provide a valid chart type name")
+            String chartTypeName,
+            @NotNull(message = "Chart Type code cannot be null")
+            @NotBlank(message = "Please provide a type code")
+            String chartTypeCode,
+            @NotNull(message = "Please provide a chart class id")
+            @Min(value = 1L, message = "Please provide a valid chart class id")
+            Long chartClassId,
+            @NotNull(message = "Chart Type Parent Id cannot be null")
+            @Min(value = 0L, message = "Please provide a valid parent id")
+            Long parentId,
+            @NotNull(message = "Username cannot be null")
+            @NotBlank(message = "Username cannot be blank")
+            String userName
+    ) {
+
+    }
+
+    @Builder
+    public record UpdateChartTypesRequest(
+            @NotNull(message = "Please provide a chart type id")
+            @Min(value = 1L, message = "Please provide a valid chart type id")
+            Long oid,
+            @OptionalNotBlank(message = "Chart Type Name when provide cannot be blank")
+            String chartTypeName,
+            @OptionalNotBlank(message = "Chart Type Code when provide cannot be blank")
+            String chartTypeCode,
+            @Min(value = 1L, message = "Please provide a valid chart class id")
+            Long chartClassId,
+            @Min(value = 0L, message = "Please provide a valid parent id")
+            Long parentId,
+            Boolean inactive,
+            @NotNull(message = "Update User cannot be null")
+            @NotBlank(message = "Update User cannot be blank")
+            String updateUser
+    ) {
+
+    }
+
+
+    @Builder
+    public record DeleteChartTypeRequest(
+            @NotNull(message = "Please provide a chart type id")
+            @Min(value = 1L, message = "Please provide a valid chart type id")
+            Long oid) {
 
     }
 }
