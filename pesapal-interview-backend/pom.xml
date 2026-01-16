@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.raphael</groupId>
-	<artifactId>pesapal-interview</artifactId>
+	<artifactId>pesapal-interview-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>pesapal-interview</name>
 	<description>Pesapal Interview Web App Back-end</description>
