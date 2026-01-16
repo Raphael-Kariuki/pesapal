@@ -228,3 +228,24 @@ cd pesapal-interview-frontend
 ```
 
 Each JAR can be deployed separately, allowing independent scaling and release cycles.
+
+## Deployment
+
+The respective images can be pulled from docker hub and run locally
+
+### Backend
+
+```bash
+docker run -p 8082:8080 -e SPRING_PROFILES_ACTIVE=deployment --name pesapal-interview-backend --network pesapal_app-net  m0ckinjay/pesapal-interview:pesapal-interview-backend
+```
+
+### Frontend
+
+```bash
+docker run -p 8083:8081 -e SPRING_PROFILES_ACTIVE=deployment --name pesapal-interview-frontend --network pesapal_app-net  m0ckinjay/pesapal-interview:pesapal-interview-frontend
+```
+
+The frontend can then be accessed via the browser at 
+```
+http://localhost:8083
+```
