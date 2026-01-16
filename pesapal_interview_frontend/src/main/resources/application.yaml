@@ -3,3 +3,13 @@ spring:
     name: pesapal_interview_frontend
 server:
   port: 8081
+backend:
+  api-endpoint: http://localhost:8080
+
+---
+spring:
+  config:
+    activate:
+      on-profile: deployment
+backend:
+  api-endpoint: http://pesapal-interview-backend:8080

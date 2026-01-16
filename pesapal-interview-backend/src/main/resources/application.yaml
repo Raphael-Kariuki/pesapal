@@ -23,3 +23,14 @@ logging:
         orm:
           jdbc:
             bind: TRACE
+---
+spring:
+  config:
+    activate:
+      on-profile: deployment
+  datasource:
+    url: jdbc:postgresql://pesapal_pgbouncer:6432/pesapal
+    username: postgres
+    password: 12345678
+    driver-class-name: org.postgresql.Driver
+

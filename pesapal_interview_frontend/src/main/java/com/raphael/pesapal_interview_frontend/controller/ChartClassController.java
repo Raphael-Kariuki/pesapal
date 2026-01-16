@@ -3,6 +3,7 @@ package com.raphael.pesapal_interview_frontend.controller;
 import com.raphael.pesapal_interview_frontend.dto.ChartClassDTOs;
 import com.raphael.pesapal_interview_frontend.dto.RegisterChartClassRequest;
 import com.raphael.pesapal_interview_frontend.dto.UpdateChartClassRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +20,15 @@ import java.util.*;
 public class ChartClassController {
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String url = "http://localhost:8080/chartClass";
+
+    @Value("${backend.api-endpoint}/chartClass")
+    private String baseUrl;
 
 
 
     @GetMapping
     public String chartClass(Model  model) {
-        var chartClasses = restTemplate.getForObject(url, ChartClassDTOs.ChartClassResponse[].class);
+        var chartClasses = restTemplate.getForObject(baseUrl, ChartClassDTOs.ChartClassResponse[].class);
         model.addAttribute("chartClasses", chartClasses);
         return "chart-class";
     }
@@ -33,7 +36,7 @@ public class ChartClassController {
     @GetMapping("/add")
     public String showAddChartClass(RegisterChartClassRequest registerChartClassRequest, Model model) {
         Map<String, String> map = new HashMap<>();
-        var classTypes = restTemplate.getForObject(url + "/classTypes", map.getClass());
+        var classTypes = restTemplate.getForObject(baseUrl + "/classTypes", map.getClass());
         model.addAttribute("classTypes", classTypes);
         model.addAttribute("registerChartClassRequest", registerChartClassRequest);
         return "create-chart-class";
@@ -41,13 +44,13 @@ public class ChartClassController {
 
     @PostMapping("/add")
     public String addChartClass(RegisterChartClassRequest registerChartClassRequest) {
-       var response = restTemplate.postForObject(url, new HashSet<>(List.of(registerChartClassRequest)), ChartClassDTOs.ChartClassResponse[].class);
+       var response = restTemplate.postForObject(baseUrl, new HashSet<>(List.of(registerChartClassRequest)), ChartClassDTOs.ChartClassResponse[].class);
        return "redirect:/chart-class";
     }
 
     @GetMapping("/update/{id}")
     public String showUpdateChartClass(@PathVariable Long id, Model model) {
-        var finalUrl = url + "?oid=" + id;
+        var finalUrl = baseUrl + "?oid=" + id;
         ResponseEntity<ChartClassDTOs.ChartClassResponse[]> entity = restTemplate.getForEntity(finalUrl, ChartClassDTOs.ChartClassResponse[].class);
         if(!entity.getStatusCode().is2xxSuccessful()){
             return "redirect:/error";
@@ -65,7 +68,7 @@ public class ChartClassController {
          model.addAttribute("updateChartClassRequest", updateChartClassRequest);
 
         Map<String, String> map = new HashMap<>();
-        var classTypes = restTemplate.getForObject(url + "/classTypes", map.getClass());
+        var classTypes = restTemplate.getForObject(baseUrl + "/classTypes", map.getClass());
         model.addAttribute("classTypes", classTypes);
 
         model.addAttribute("inactive", List.of(Boolean.TRUE, Boolean.FALSE));
@@ -76,7 +79,7 @@ public class ChartClassController {
     @PostMapping("/update/{id}")
     public String updateChartClass(@PathVariable Long id, UpdateChartClassRequest  updateChartClassRequest) {
         updateChartClassRequest.setOid(id);
-        var response = restTemplate.postForEntity(url + "/update", new HashSet<>(List.of(updateChartClassRequest)), ChartClassDTOs.ChartClassResponse[].class);
+        var response = restTemplate.postForEntity(baseUrl + "/update", new HashSet<>(List.of(updateChartClassRequest)), ChartClassDTOs.ChartClassResponse[].class);
         if (!response.getStatusCode().is2xxSuccessful()){
             return "redirect:/error";
         }
@@ -86,7 +89,7 @@ public class ChartClassController {
 
     @GetMapping("/delete/{id}")
     public String deleteChartClass(@PathVariable Long id) {
-        restTemplate.delete(url + "?oid=" + id);
+        restTemplate.delete(baseUrl + "?oid=" + id);
         return "redirect:/chart-class";
     }
 }

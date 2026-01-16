@@ -4,6 +4,7 @@ import com.raphael.pesapal_interview_frontend.dto.ChartClassDTOs;
 import com.raphael.pesapal_interview_frontend.dto.ChartTypeDTOs.*;
 import com.raphael.pesapal_interview_frontend.dto.UpdateChartTypesRequest;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,13 +24,21 @@ import java.util.List;
 public class ChartTypeController {
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String url = "http://localhost:8080/chartType";
-    private final String chartClassUrl = "http://localhost:8080/chartClass";
+
+
+    @Value("${backend.api-endpoint}/chartType")
+    private String baseUrl;
+
+    @Value("${backend.api-endpoint}/chartClass")
+    private String chartClassUrl;
+
 
 
     @GetMapping
     public String chartType(Model model) {
-        var chartTypes = restTemplate.getForEntity(url, ChartTypeResponse[].class);
+
+
+        var chartTypes = restTemplate.getForEntity(baseUrl, ChartTypeResponse[].class);
         if (!chartTypes.getStatusCode().is2xxSuccessful()) {
             return "redirect:/error";
         }
@@ -47,7 +56,7 @@ public class ChartTypeController {
         }
         model.addAttribute("chartClasses", chartClasses.getBody());
 
-        var chartTypes = restTemplate.getForEntity(url, ChartTypeResponse[].class);
+        var chartTypes = restTemplate.getForEntity(baseUrl, ChartTypeResponse[].class);
         if (!chartTypes.getStatusCode().is2xxSuccessful()) {
             return "redirect:/error";
         }
@@ -62,7 +71,7 @@ public class ChartTypeController {
 
     @PostMapping("/add")
     public String addChartType(@Valid RegisterChartTypesRequest registerChartTypesRequest) {
-        var response = restTemplate.postForEntity(url,new HashSet<>(List.of(registerChartTypesRequest)), ChartTypeResponse[].class);
+        var response = restTemplate.postForEntity(baseUrl,new HashSet<>(List.of(registerChartTypesRequest)), ChartTypeResponse[].class);
         if (response.getStatusCode().value() != HttpStatus.CREATED.value()){
             return "redirect:/error";
         }
@@ -71,7 +80,7 @@ public class ChartTypeController {
 
     @GetMapping("/update/{id}")
     public String showUpdateChartType(@PathVariable Long id, Model model) {
-        var chartTypeResponse = restTemplate.getForEntity(url +"?oid=" + id, ChartTypeResponse[].class);
+        var chartTypeResponse = restTemplate.getForEntity(baseUrl +"?oid=" + id, ChartTypeResponse[].class);
         if (!chartTypeResponse.getStatusCode().is2xxSuccessful()) {
             return "redirect:/error";
         }
@@ -95,7 +104,7 @@ public class ChartTypeController {
         model.addAttribute("chartClasses", chartClasses.getBody());
 
 
-        var chartTypes = restTemplate.getForEntity(url, ChartTypeResponse[].class);
+        var chartTypes = restTemplate.getForEntity(baseUrl, ChartTypeResponse[].class);
         if (!chartTypes.getStatusCode().is2xxSuccessful()) {
             return "redirect:/error";
         }
@@ -113,7 +122,7 @@ public class ChartTypeController {
     @PostMapping("/update/{id}")
     public String updateChartType(@PathVariable Long id,UpdateChartTypesRequest updateChartTypesRequest) {
         updateChartTypesRequest.setOid(id);
-        var response = restTemplate.postForEntity(url + "/update",new HashSet<>(List.of(updateChartTypesRequest)), ChartTypeResponse[].class);
+        var response = restTemplate.postForEntity(baseUrl + "/update",new HashSet<>(List.of(updateChartTypesRequest)), ChartTypeResponse[].class);
         if (response.getStatusCode().value() != HttpStatus.OK.value()){
             return "redirect:/error";
         }
@@ -122,7 +131,7 @@ public class ChartTypeController {
 
     @GetMapping("/delete/{id}")
     public String deleteChartType(@PathVariable Long id) {
-        restTemplate.delete(url +"?oid=" + id);
+        restTemplate.delete(baseUrl +"?oid=" + id);
         return "redirect:/chart-type";
     }
 
